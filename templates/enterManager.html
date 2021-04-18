@@ -32,28 +32,33 @@
 </head>
 <body>
     <div class="container">
-    <div class="err" >
-    {% if message %}
-        <p>{{ message }}</p>
-    {% endif %}
-</div>
 
-<div class="forms"> 
+<div class="forms">
+    <h3>Вход в операторскую</h3> 
     <form action="" method="post" >
 
         <p>
             <label for="psw">Пароль:</label>
         </p><p>
-            <input type="text" name="psw">
+            <input type="password" name="psw" id = "pswforman">
         </p>
         <p>
-            <input type="submit" class="btn btn-primary" value="Войти">
+            <input id = "butforman" type="submit" class="btn btn-primary" value="Войти">
         </p>
         </form>
 
 
 </div>
 </div>
-
+<!-- <script>
+    document.getElementById('butforman').onclick = function() {
+        var text = document.getElementsByTagName("input")[0];
+        var val = text.value;
+        alert(val);
+        if (val == 'admin') {
+            window.location.href = '/manage';
+        }
+    };
+</script> -->
 </body>
 </html>
