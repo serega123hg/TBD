@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <title>Служба поддержки</title>
+    <style>
+        form {
+           margin: 20px; 
+        }
+        .err {
+         margin: 20px; 
+        }
+        .tblock{
+            margin-top: 20px;
+        }
+        .hidthis{
+            display: none;
+        }
+        h2{
+            margin-left: 210px;
+        }
+        .select_class{
+            width: 350px;
+        }
+        .addforma{
+            margin-left: 210px;
+        }
+        </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+
+    <div class="err" >
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+    </div>
+
+
+    <div class="container">
+       <h4>Обращения в поддержку</h4>
+       <div class="titl1">
+            <button class="btn_plan" type="button" onclick="window.location.href='{{ url_for( 'support.idx1' ) }}';">Все заявки</button>
+            <button class="btn_plan" type="button" onclick="window.location.href='{{ url_for( 'support.idx2' ) }}';">Заявки в работе</button>
+            <button class="btn_plan" type="button" onclick="window.location.href='{{ url_for( 'support.idx3' ) }}';">Создать обращение</button>
+        </div>
+    </div>
+        {% if rezall %}
+        <div class="table_content tblock">
+            <h2>Все обращения</h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">ID обращения</th>
+                    <th scope="col">Ответственный сотрудник</th>
+                    <th scope="col">ID поездки</th>
+                    <th scope="col">Дата поездки</th>
+                    <th scope="col">Водитель</th>
+                    <th scope="col">Телефон водителя</th>
+                    <th scope="col">Имя клиента</th>
+                    <th scope="col">Фамилия клиента</th>
+                    <th scope="col">Телефон клиента</th>
+                    <th scope="col">Описание</th>
+                    <th scope="col">Закрыто</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for zap in rezall %}
+                <tr class="table-light">
+                    {% for khm in zap %}
+                            <td>{{khm }}</td>
+                    {% endfor %}
+                {% endfor %}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+
+        {% if rezinwork %}
+        <div class="table_content tblock">
+            <h2>Обращения в работе</h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">ID обращения</th>
+                    <th scope="col">Ответственный сотрудник</th>
+                    <th scope="col">ID поездки</th>
+                    <th scope="col">Дата поездки</th>
+                    <th scope="col">Водитель</th>
+                    <th scope="col">Телефон водителя</th>
+                    <th scope="col">Имя клиента</th>
+                    <th scope="col">Фамилия клиента</th>
+                    <th scope="col">Телефон клиента</th>
+                    <th scope="col">Описание</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for zap in rezinwork %}
+                <tr class="table-light">
+                    {% for khm in zap %}
+                            <td>{{khm }}</td>
+                    {% endfor %}
+                    <td>
+                        <form action="" method="post" >
+                            <input class = 'hidthis' type="text" name="applid" value={{ zap[0] }}>
+                            <input type="submit" class="btn btn-primary" value = "Закрыть">
+                        </form>
+                    </td>
+                {% endfor %}
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        {% if rezcreate %}
+        <div class="err" >
+            {% if message1 %}
+                <p>{{ message1 }}</p>
+            {% endif %}
+        </div>
+
+        <form action="" method="post" class="addforma">
+            <p>
+            <div class="form-group">
+                <label for="add_appl" class="new_appl">Добавить обращение:</label>
+            </div>
+            </p>
+            <div>
+            <p>
+                <label for="fk_worker">Ответственный сотрудник</label>
+            </p>    
+            <p>  
+                <select class="form-control select_class" id="Select1124561" name="fk_worker">
+                    {% for w in workers %}
+                    <option>{{ w }}</option>
+                    {% endfor %}
+                    </select>
+            </p>
+            <p>
+                <label for="Client_Name">Имя клиента</label>
+            </p><p>
+                <input type="text" name="Client_Name">
+            </p>
+            <p>
+                <label for="Client_Last_Name">Фамилия клиента</label>
+            </p><p>
+                <input type="text" name="Client_Last_Name">
+            </p>
+            <p>
+                <label for="Client_Phone">Телефон клиента</label>
+            </p>
+            <p>
+                <input type="text" name="Client_Phone">
+            </p>
+            <p>
+                <label for="Ride_time">Дата поездки</label>
+            </p><p>
+                <input type="date" name="Ride_time">
+            </p>
+            <p>
+                <label for="Ride_time1">Примерное время поездки</label>
+            </p><p>
+                <input type="time" name="Ride_time1">
+            </p>
+            
+
+            <p>
+                <label for="Description">Описание</label>
+            </p><p>
+                <input type="text" name="Description">
+            </p>
+        <p>
+            <input type="submit" class="btn btn-primary" value = "Добавить запись">
+        </p>
+        </div>
+        </form>
+        {% endif %}
+    
+</head>
+<body>

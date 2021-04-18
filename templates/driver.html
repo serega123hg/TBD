@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    
+    <title>Кабинет водителя</title>
+    <style>
+       form {
+          margin: 20px; 
+          margin-left: 0;
+       }
+       .err {
+        margin: 20px; 
+       }
+       .tblock{
+           margin-top: 20px;
+       }
+       .select_class{
+            width: 350px;
+            margin-bottom: 20px;
+        }
+       </style>
+       <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <div class="err" >
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+    </div>
+
+    <div class="container">
+
+        {% if flag1 %}
+        <h3>Войдите по номеру телефона</h3>
+        <form action="" method="post" >
+
+            <p>
+                <label for="Phone">Номер телефона</label>
+            </p><p>
+                <input type="text" name="Phone">
+            </p>
+            <p>
+                <input type="submit" class="btn btn-primary" value="Войти">
+            </p>
+            </form>
+        {% endif %}
+
+        {% if flag %}
+            <div class="titl">Ваши данные</div>
+
+            <div>ФИО {{ FIO }}</div>
+            <div>Рейтинг {{ Rating }}</div>
+            <div>Данные о ТС:</div>
+            <div>Модель {{ TS_model }}</div>
+            <div>Номер {{ TS_number }}</div>
+            <div>Вам доступны вызовы по тарифу {{ tarif }}</div>
+            
+        {% endif %}
+
+        {% if cantake %}  
+        <form action="" method="post" >
+            <p>
+                <label for="Plan">Доступные заказы</label>
+            </p>                
+            <select class="form-control select_class" name="takethis" required>
+                {% for zap in avrides %}
+                <option>{{ zap }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" class="btn btn-primary" value = "Взять заказ" name = "takeit">
+            {% if mes %}
+            <p>{{ mes }}</p>
+        {% endif %}
+        </form>
+        {% endif %}
+
+        {% if vezu %}  
+        <h2>Текущая поездка</h2>
+        <div>Откуда {{ vezufrom }}</div>
+        <div>Куда {{ vezuto }}</div>
+        <div>Имя клиента {{ vezukogo }}</div>
+        <div>Телефон клиента {{ vezukogophone }}</div>
+        <form action="" method="post" >
+            <p>
+                <label for="Distance">Расстояние</label>
+            </p><p>
+                <input type="text" name="Distance">
+            </p>
+            <p>
+                <label for="Total">Итоговая стоимость</label>
+            </p><p>
+                <input type="text" name="Total" required>
+            </p>
+            <input type="submit" class="btn btn-primary" value = "Завершить поездку" name = "finishthis">
+            {% if mes1 %}
+                <p>{{ mes1 }}</p>
+            {% endif %}
+        </form>
+        {% endif %}
+
+
+        {% if flag2 %}   
+        <form action="" method="post" >
+            <input type="submit" class="btn btn-primary" value = "История поездок" name="showride">
+        </form>
+        {% endif %}
+
+
+        {% if flag %}   
+        <form action="" method="post" >
+            <input type="submit" class="btn btn-primary" value = "История поездок" name="showride">
+        </form>
+        {% endif %}
+
+        {% if showr %}
+        <div class="table_content tblock">
+            <h2>История поездок</h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Дата поездки</th>
+                    <th scope="col">Пункт отправления</th>
+                    <th scope="col">Пункт прибытия</th>
+                    <th scope="col">Сумма поездки</th>
+                    <th scope="col">Телефон клиента</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for zap in ride %}
+                <tr class="table-light">
+                    {% for khm in zap %}
+                            <td>{{khm }}</td>
+                    {% endfor %}
+                {% endfor %}
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

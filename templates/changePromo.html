@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <title>Изменить информацию о промокодах</title>
+    <style>
+       form {
+          margin: 20px; 
+       }
+       .err {
+        margin: 20px; 
+       }
+       .form-group{
+           max-width: 500px;
+       }
+       .vis{
+            visibility: hidden;
+        }
+        .hide{
+            display: none;
+        }
+        .new_promo:hover{
+            text-decoration: underline;
+        }
+        .select_class{
+            width: 350px;;
+        }
+       </style>
+</head>
+<body>
+    <div class="container">
+    <div class="err" >
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+</div>
+
+<div class="forms"> 
+<form action="" method="post" >
+    <p>
+        <div class="form-group">
+            <label for="cur_promo">Выберите промокод</label>
+            <select class="form-control select_class" id="exampleSelect1111" name="cur_promo">
+            {% for zap in promo %}
+            <option>{{ zap }}</option>
+            {% endfor %}
+            </select>
+          </div>
+    </p>
+<p>
+    <input type="submit" class="btn btn-primary" value = "Редактировать выбранный промокод">
+</p>
+</form>
+
+{% if flag %}
+<h3>Вы редактируете промокод "{{ prm }}"</h3>
+<form action="" method="post" >
+
+    <p>
+        <label for="Code">Промокод</label>
+    </p><p>
+        <input type="text" name="Code", value={{ prm }}>
+    </p>
+    <p>
+        <label for="Discount">Скидка (%)</label>
+    </p><p>
+        <input type="text" name="Discount", value={{ serv[2] }}>
+    </p>
+    <p>
+        <label for="Amount">Количество</label>
+    </p><p>
+        <input type="text" name="Amount" value={{ serv[3] }}>
+    </p>
+    <p>
+        <label for="valid_until">Действителен до</label>
+    </p><p>
+        <input type="date" name="valid_until"  value={{ serv[4] }}>
+    </p>
+    <p>
+        <input type="submit" class="btn btn-primary" value="Внести изменения">
+    </p>
+    </form>
+
+{% endif %}
+
+
+<form action="" method="post" >
+    <p>
+        <div class="form-group">
+            <label for="del_promo">Выберите промокод</label>
+            <select class="form-control select_class" id="exampleSelect132" name="del_promo">
+            {% for zap in promo %}
+            <option>{{ zap }}</option>
+            {% endfor %}
+            </select>
+          </div>
+    </p>
+<p>
+    <input type="submit" class="btn btn-primary" value = "Удалить выбранный промокод">
+</p>
+</form>
+
+
+<form action="" method="post" >
+    <p>
+    <div class="form-group">
+        <label for="add_promo" class="new_promo">Добавить новый промокод:</label>
+    </div>
+    </p>
+    <div class="hid_form hide">
+    <p>
+        <label for="Code1">Промокод</label>
+    </p><p>
+        <input type="text" name="Code1">
+    </p>
+    <p>
+        <label for="Discount1">Скидка (%)</label>
+    </p><p>
+        <input type="text" name="Discount1">
+    </p>
+    <p>
+        <label for="Amount1">Количество</label>
+    </p><p>
+        <input type="text" name="Amount1">
+    </p>
+    <p>
+        <label for="valid_until1">Действителен до</label>
+    </p><p>
+        <input type="date" name="valid_until1">
+    </p>
+<p>
+    <input type="submit" class="btn btn-primary" value = "Добавить промокод">
+</p>
+</div>
+</form>
+</div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".new_promo").click(function () {
+        $(".hid_form").toggleClass("hide");
+        })
+    });
+    </script>
+</body>
+</html>

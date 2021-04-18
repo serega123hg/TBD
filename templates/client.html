@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    
+    <title>Кабинет клиента</title>
+    <style>
+       form {
+          margin: 20px; 
+          margin-left: 0;
+       }
+       .err {
+        margin: 20px; 
+       }
+       .tblock{
+           margin-top: 20px;
+       }
+       .select_class{
+            width: 350px;
+            margin-bottom: 20px;
+        }
+       </style>
+       <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <div class="err" >
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+    </div>
+
+    <div class="container">
+
+        {% if flag1 %}
+        <h3>Авторизуйтесь</h3>
+        <form action="" method="post" >
+
+            <p>
+                <label for="Name">Имя</label>
+            </p><p>
+                <input type="text" name="Name">
+            </p>
+            <p>
+                <label for="Last_Name">Фамилия</label>
+            </p><p>
+                <input type="text" name="Last_Name">
+            </p>
+            <p>
+                <label for="Phone">Номер телефона</label>
+            </p><p>
+                <input type="text" name="Phone">
+            </p>
+            <p>
+                <input type="submit" class="btn btn-primary" value="Войти">
+            </p>
+            </form>
+        {% endif %}
+
+        {% if flag %}
+            <div class="titl">Ваши данные</div>
+
+            <div>Имя {{ Name }}</div>
+            <div>Фамилия {{ Last_Name }}</div>
+            <div>Рейтинг {{ Rating }}</div>
+
+            <form action="" method="post" >
+                <label for="cur_pos">Платежные средства</label>
+                <select class="form-control select_class" name="cardchange" required>
+                {% for zap in cards %}
+                <option>{{ zap }}</option>
+                {% endfor %}
+                </select>
+                <input type="submit" class="btn btn-primary" value = "Добавить карту" name="cardadd">
+                <input type="submit" class="btn btn-primary" value = "Отвязать карту" name="carddel">
+            </form>
+        {% endif %}
+        
+        {% if flag2 %}
+        <div class="titl">Введите данные карты</div>
+        <form action="" method="post" >
+            <p>
+                <label for="Card_Number">Номер карты</label>
+            </p><p>
+                <input type="text" name="Card_Number" required>
+            </p>
+            <p>
+                <label for="Year">Год</label>
+            </p><p>
+                <input type="text" name="Year" required>
+            </p>
+            <p>
+                <label for="Month">Месяц</label>
+            </p><p>
+                <input type="text" name="Month" required>
+            </p>
+            <p>
+                <label for="SK">CVC</label>
+            </p><p>
+                <input type="text" name="SK" required>
+            </p>
+            <input type="submit" class="btn btn-primary" value = "Добавить" name="cardadd1">
+        </form>
+        {% endif %}
+
+        {% if flag %}   
+        <form action="" method="post" >
+            <input type="submit" class="btn btn-primary" value = "История поездок" name="showride">
+        </form>
+        {% endif %}
+
+        {% if showr %}
+        <div class="table_content tblock">
+            <h2>История поездок</h2>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Дата поездки</th>
+                    <th scope="col">Пункт отправления</th>
+                    <th scope="col">Пункт прибытия</th>
+                    <th scope="col">Сумма поездки</th>
+                    <th scope="col">Водитель</th>
+                    <th scope="col">Телефон водителя</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for zap in ride %}
+                <tr class="table-light">
+                    {% for khm in zap %}
+                            <td>{{khm }}</td>
+                    {% endfor %}
+                {% endfor %}
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        {% if flag %}   
+        <h2>Сделать заказ</h2>
+        <form action="" method="post" >
+            <p>
+                <label for="Plan">Выберите тариф</label>
+            </p>                
+            <select class="form-control select_class" name="Plan" required>
+                {% for zap in plans %}
+                <option>{{ zap }}</option>
+                {% endfor %}
+            </select>
+            <p>
+                <label for="Av_Departue">Откуда</label>
+            </p><p>
+                <input type="text" name="Av_Departue" required>
+            </p>
+            <p>
+                <label for="Av_Destination">Куда</label>
+            </p><p>
+                <input type="text" name="Av_Destination" required>
+            </p>
+            <p>
+                <label for="Promo">Промокод</label>
+            </p><p>
+                <input type="text" name="Promo">
+            </p>
+            <p>
+                <label for="dop">Дополнительные услуги</label>
+            </p><p>
+                
+                <input type="checkbox" name="Meeting"/>
+                <label for="Meeting">Встреча с табличкой</label>
+            </p><p>
+                <input type="checkbox" name="Child_Chair"/>
+                <label for="Child_Chair">Детское кресло</label>
+            </p><p>
+                <input type="checkbox" name="Animal"/>
+                <label for="Animal">Перевозка животных</label>
+            </p>
+            <input type="submit" class="btn btn-primary" value = "Вызвать такси" name = "calltaxi">
+            {% if mes %}
+            <p>{{ mes }}</p>
+        {% endif %}
+        </form>
+        {% endif %}
+    </div>
+
+
+</body>
+</html>
